@@ -4,22 +4,24 @@ import SwiftUI
 import Solandra
 
 final class SolandraTests: XCTestCase {
-#if os(iOS)
+  
+#if os(macOS)
     func testDrawingSomething() throws {
-      let vc = UIHostingController(rootView: SolandraCanvas {
+      let vc = NSHostingController(rootView: SolandraCanvas {
         context, size, solandra in
-        context.setFillColor(UIColor(hue: 0, saturation: 1, brightness: 1, alpha: 1).cgColor)
+        context.setFillColor(NSColor(hue: 0, saturation: 1, brightness: 1, alpha: 1).cgColor)
         context.addRect(size.rect)
         context.fillPath()
       })
-      vc.view.frame = UIScreen.main.bounds
+      
+      vc.view.frame = NSRect(x: 0, y: 0, width: 1024, height: 640)
       
       assertSnapshot(matching: vc, as: .image)
     }
   
   func testRenderSomething() throws {
     let sketch: SolandraSketch = { context, size, solandra in
-      context.setFillColor(UIColor(hue: 0, saturation: 1, brightness: 1, alpha: 1).cgColor)
+      context.setFillColor(NSColor(hue: 0, saturation: 1, brightness: 1, alpha: 1).cgColor)
       context.addRect(size.rect)
       context.fillPath()
     }
