@@ -4,6 +4,7 @@ import SwiftUI
 import Solandra
 
 final class SolandraTests: XCTestCase {
+#if os(iOS)
     func testDrawingSomething() throws {
       let vc = UIHostingController(rootView: SolandraCanvas {
         context, size, solandra in
@@ -26,4 +27,5 @@ final class SolandraTests: XCTestCase {
     let image = Solandra.renderImage(width: 1024, height: 800, sketch: sketch)
     assertSnapshot(matching: image, as: .image)
   }
+#endif
 }
