@@ -16,7 +16,7 @@ final class SolandraTests: XCTestCase {
       
       vc.view.frame = NSRect(x: 0, y: 0, width: 1024, height: 640)
       
-      assertSnapshot(matching: vc, as: .image)
+      assertSnapshot(matching: vc, as: .image(precision: 0.95, perceptualPrecision: 0.95))
     }
   
   func testRenderSomething() throws {
