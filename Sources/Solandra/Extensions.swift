@@ -5,3 +5,9 @@ extension Int {
     Double(self)
   }
 }
+
+extension Double {
+  public var i: Int {
+    Int(self)
+  }
+}
