@@ -6,7 +6,7 @@
       "location" : "https://github.com/jamesporter/CGExtensions",
       "state" : {
         "branch" : "main",
-        "revision" : "eca6d0087c2958f342fa2e8e44987e8734e86f89"
+        "revision" : "1a33a318abd6a02acbf644b55bac9500e79c9efd"
       }
     },
     {
@@ -15,7 +15,7 @@
       "location" : "https://github.com/jamesporter/PseudoRandom",
       "state" : {
         "branch" : "main",
-        "revision" : "43f35a27910ee5074a6d57854fb11266cc23fe25"
+        "revision" : "392d80179d360ee3157acabfe3739ad4e23aff1a"
       }
     },
     {

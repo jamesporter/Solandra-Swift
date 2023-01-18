@@ -2,6 +2,12 @@
 import PseudoRandom
 import SwiftUI
 
+#if os(macOS)
+    typealias OSColor = NSColor
+#elseif os(iOS) || os(tvOS) || os(watchOS)
+    typealias OSColor = UIColor
+#endif
+
 
 public class Solandra {
   var rng: PseudoRandom
@@ -17,6 +23,30 @@ public class Solandra {
   
   public var aspectRatio: Double {
     size.width / size.height
+  }
+  
+  public func setFill(_ hue: Double, _ saturation: Double, _ brightness: Double, _ opacity: Double = 1) {
+    context.setFillColor(OSColor(hue: hue, saturation: saturation, brightness: brightness, alpha: opacity).cgColor)
+  }
+  
+  public func setStroke(_ hue: Double, _ saturation: Double, _ brightness: Double, _ opacity: Double = 1) {
+    context.setStrokeColor(OSColor(hue: hue, saturation: saturation, brightness: brightness, alpha: opacity).cgColor)
+  }
+  
+  public func background(_ hue: Double, _ saturation: Double, _ brightness: Double, _ opacity: Double = 1) {
+    setFill(hue, saturation, brightness, opacity)
+    context.addRect(size.rect)
+    context.fillPath()
+  }
+  
+  public func fill(_ path: SPath) {
+    path.addTo(context: context)
+    context.fillPath()
+  }
+  
+  public func stroke(_ path: SPath) {
+    path.addTo(context: context)
+    context.strokePath()
   }
 }
 
