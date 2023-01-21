@@ -90,7 +90,7 @@ public struct SPath {
     }
     
     if closed {
-      try close()
+      close()
     }
   }
   
