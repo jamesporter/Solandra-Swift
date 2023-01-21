@@ -2,13 +2,6 @@
 import PseudoRandom
 import SwiftUI
 
-#if os(macOS)
-    typealias OSColor = NSColor
-#elseif os(iOS) || os(tvOS) || os(watchOS)
-    typealias OSColor = UIColor
-#endif
-
-
 public class Solandra {
   var rng: PseudoRandom
   
@@ -26,15 +19,29 @@ public class Solandra {
   }
   
   public func setFill(_ hue: Double, _ saturation: Double, _ brightness: Double, _ opacity: Double = 1) {
-    context.setFillColor(OSColor(hue: hue, saturation: saturation, brightness: brightness, alpha: opacity).cgColor)
+    context.setFillColor(SColor(hue: hue, saturation: saturation, brightness: brightness, opacity: opacity).cg)
   }
   
   public func setStroke(_ hue: Double, _ saturation: Double, _ brightness: Double, _ opacity: Double = 1) {
-    context.setStrokeColor(OSColor(hue: hue, saturation: saturation, brightness: brightness, alpha: opacity).cgColor)
+    context.setStrokeColor(SColor(hue: hue, saturation: saturation, brightness: brightness, opacity: opacity).cg)
   }
   
   public func background(_ hue: Double, _ saturation: Double, _ brightness: Double, _ opacity: Double = 1) {
     setFill(hue, saturation, brightness, opacity)
+    context.addRect(size.rect)
+    context.fillPath()
+  }
+  
+  public func setFill(color: SColor) {
+    context.setFillColor(color.cg)
+  }
+  
+  public func setStroke(color: SColor) {
+    context.setStrokeColor(color.cg)
+  }
+  
+  public func background(color: SColor) {
+    setFill(color: color)
     context.addRect(size.rect)
     context.fillPath()
   }
@@ -47,6 +54,26 @@ public class Solandra {
   public func stroke(_ path: SPath) {
     path.addTo(context: context)
     context.strokePath()
+  }
+  
+  private func draw(gradient: SGradient) {
+    switch gradient {
+    case let .linear(_, start, end):
+      context.drawLinearGradient(gradient.gradient, start: start, end: end, options: [])
+    case let .radial(_, startCenter, startRadius, endCenter, endRadius):
+      context.drawRadialGradient(gradient.gradient, startCenter: startCenter, startRadius: startRadius, endCenter: endCenter, endRadius: endRadius, options: [])
+    }
+  }
+  
+  public func fill(_ path: SPath, with gradient: SGradient) {
+    path.addTo(context: context)
+    draw(gradient: gradient)
+  }
+  
+  public func stroke(_ path: SPath, with gradient: SGradient) {
+    path.addTo(context: context)
+    context.replacePathWithStrokedPath()
+    draw(gradient: gradient)
   }
   
   public func fill(cgPath: CGPath) {
