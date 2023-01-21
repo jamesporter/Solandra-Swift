@@ -29,13 +29,17 @@ struct GradientPreviews: PreviewProvider {
   static var previews: some View {
     SolandraCanvas { context, size, s in
       s.fill(SPath.regularPolygon(radius: size.width / 3, at: size.rect.center, n: 7), with: SGradient.linear(gradient: [
-        SColorStop(color: SColor(hue: 0.1, saturation: 1, brightness: 0.7),
-                   location: 0),
-        SColorStop(color: SColor(hue: 0, saturation: 1, brightness: 0.7),
-                   location: 0.3),
-        SColorStop(color: SColor(hue: 0.9, saturation: 1, brightness: 0.7),
-                   location: 0.95)
-       ], start: CGPoint.zero, end: CGPoint(480, 480) ))
+//        SColorStop(color: SColor(hue: 0.1, saturation: 1, brightness: 0.7),
+//                   location: 0),
+//        SColorStop(color: SColor(hue: 0, saturation: 1, brightness: 0.7),
+//                   location: 0.3),
+//        SColorStop(color: SColor(hue: 0.9, saturation: 1, brightness: 0.7),
+//                   location: 0.95)
+        SColor.goldenrod.start,
+        SColor.red.mid,
+        SColor.hotpink.end
+        
+       ], start: CGPoint.zero, end: CGPoint(0, 480) ))
     }.frame(width: 480, height: 480)
   }
 }

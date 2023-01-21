@@ -23,6 +23,30 @@ public struct SColor {
   var cg: CGColor {
     OSColor(hue: hue, saturation: saturation, brightness: brightness, alpha: opacity).cgColor
   }
+  
+  func stop(at: Double) -> SColorStop {
+    SColorStop(color: self, location: at)
+  }
+  
+  var start: SColorStop {
+    stop(at: 0)
+  }
+  
+  var quarter: SColorStop {
+    stop(at: 0.25)
+  }
+  
+  var mid: SColorStop {
+    stop(at: 0.5)
+  }
+  
+  var threeQuarter: SColorStop {
+    stop(at: 0.75)
+  }
+  
+  var end: SColorStop {
+    stop(at: 1)
+  }
 }
 
 public struct SColorStop {
