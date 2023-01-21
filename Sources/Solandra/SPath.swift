@@ -66,6 +66,10 @@ public enum SPathEdge {
   }
 }
 
+public enum ShapeAlignment {
+  case centered, topLeft
+}
+
 
 public struct SPath {
   public var edges: [SPathEdge] = []
@@ -255,7 +259,7 @@ public struct SPath {
     at: CGPoint = CGPoint.zero,
     n: Int = 5,
     startAngle: Double = 0) -> SPath {
-      var a = -Double.pi / 2 + startAngle
+      let a = -Double.pi / 2 + startAngle
       let dA = (Double.pi * 2) / n.d
       var path = SPath(start: CGPoint(at.x + radius * cos(a), at.y + radius * sin(a)))
       for i in 1..<n {
@@ -310,5 +314,27 @@ public struct SPath {
       path.addLine(to: at + CGPoint(r * cos(a), r * sin(a)))
     }
     return path
+  }
+  
+  public static func rectangle(at: CGPoint, width: Double, height: Double, align: ShapeAlignment = .topLeft) -> SPath {
+    let start: CGPoint
+    switch align {
+    case .topLeft:
+      start = at
+    case .centered:
+      start = at - CGPoint(width / 2, height / 2)
+    }
+    
+    var path = SPath(start: start)
+    path.addLine(to: start + CGPoint(width, 0))
+    path.addLine(to: start + CGPoint(width, height))
+    path.addLine(to: start + CGPoint(0, height))
+    path.close()
+    
+    return path
+  }
+  
+  public static func square(at: CGPoint, size: Double, align: ShapeAlignment = .topLeft) -> SPath {
+    rectangle(at: at, width: size, height: size, align: align)
   }
 }

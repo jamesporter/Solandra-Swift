@@ -48,6 +48,16 @@ public class Solandra {
     path.addTo(context: context)
     context.strokePath()
   }
+  
+  public func fill(cgPath: CGPath) {
+    context.addPath(cgPath)
+    context.fillPath()
+  }
+  
+  public func stroke(cgPath: CGPath) {
+    context.addPath(cgPath)
+    context.strokePath()
+  }
 }
 
 
