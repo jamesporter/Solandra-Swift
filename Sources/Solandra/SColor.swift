@@ -47,6 +47,27 @@ public struct SColor {
   var end: SColorStop {
     stop(at: 1)
   }
+  
+  func with(hue: Double? = nil, saturation: Double? = nil, brightness: Double? = nil, opacity: Double? = nil) -> SColor {
+    var copy = self
+    if let hue = hue {
+      copy.hue = hue
+    }
+    
+    if let saturation = saturation {
+      copy.saturation = saturation
+    }
+    
+    if let brightness = brightness {
+      copy.brightness = brightness
+    }
+    
+    if let opacity = opacity {
+      copy.opacity = opacity
+    }
+    
+    return copy
+  }
 }
 
 public struct SColorStop {

@@ -22,6 +22,20 @@ extension Solandra {
     rng.randomBool()
   }
   
+  public func randomPoint() -> CGPoint {
+    CGPoint(rng.random() * size.width, rng.random() * size.height)
+  }
+  
+  public func randomPoints(n: Int) -> [CGPoint] {
+    var points: [CGPoint] = []
+    if n > 0 {
+      for _ in 0..<n {
+        points.append(randomPoint())
+      }
+    }
+    return points
+  }
+   
   public func uniformGridPoint(minX: Int, maxX: Int, minY: Int, maxY: Int) -> (Int, Int) {
     rng.uniformGridPoint(minX: minX, maxX: maxX, minY: minY, maxY: maxY)
   }
@@ -52,5 +66,9 @@ extension Solandra {
   
   public func poisson(lambda: Int) -> Int {
     rng.poisson(lambda: lambda)
+  }
+  
+  public func randomColor(hue: Double? = nil, saturation: Double? = nil, brightness: Double? = nil, opacity: Double? = nil) -> SColor {
+    SColor(hue: hue ?? rng.random(), saturation: saturation ?? rng.random(), brightness: brightness ?? rng.random(), opacity: opacity ?? rng.random() )
   }
 }

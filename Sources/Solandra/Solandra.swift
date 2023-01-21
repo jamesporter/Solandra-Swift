@@ -66,14 +66,28 @@ public class Solandra {
   }
   
   public func fill(_ path: SPath, with gradient: SGradient) {
+    context.saveGState()
     path.addTo(context: context)
+    context.clip()
     draw(gradient: gradient)
+    context.restoreGState()
   }
   
   public func stroke(_ path: SPath, with gradient: SGradient) {
+    context.saveGState()
     path.addTo(context: context)
     context.replacePathWithStrokedPath()
+    context.clip()
     draw(gradient: gradient)
+    context.restoreGState()
+  }
+  
+  public func fill(_ path: SPath, withSimpleGradientFrom from: GradientBoundary, to: GradientBoundary, stops: [SColorStop]) {
+    fill(path, with: .linear(gradient: stops, start: from.absolutePoint(size: size), end: to.absolutePoint(size: size)))
+  }
+  
+  public func stroke(_ path: SPath, withSimpleGradientFrom from: GradientBoundary, to: GradientBoundary, stops: [SColorStop]) {
+    stroke(path, with: .linear(gradient: stops, start: from.absolutePoint(size: size), end: to.absolutePoint(size: size)))
   }
   
   public func fill(cgPath: CGPath) {

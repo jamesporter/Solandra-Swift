@@ -271,19 +271,21 @@ public struct SPath {
       return path
     }
   
-  public static func star(r1: Double, r2: Double? = nil, at: CGPoint, n: Int, startAngle: Double = 0 ) throws -> SPath {
+  public static func star(r1: Double, r2: Double? = nil, at: CGPoint, n: Int, startAngle: Double = 0 ) -> SPath {
+    var m = n
     if n < 3 {
-      throw SPathError.notEnoughEdges(required: 6)
+      // make it at least 3... don't want to have to throw
+      m = 3
     }
     
     let a = -Double.pi / 2 + startAngle
     let iR = r2 ?? r1 / 2
-    let dA = (Double.pi * 2) / n.d
+    let dA = (Double.pi * 2) / m.d
     
     let currentPoint = CGPoint(at.x + r1 * cos(a), at.y + r1 * sin(a))
     var path = SPath(start: currentPoint)
     
-    for i in 1..<n {
+    for i in 1..<m {
       path.addLine(to:
                     CGPoint(at.x + iR * cos(a + (i.d - 0.5) * dA),
                             at.y + iR * sin(a + (i.d - 0.5) * dA)))

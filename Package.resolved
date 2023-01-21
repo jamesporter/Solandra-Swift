@@ -6,7 +6,7 @@
       "location" : "https://github.com/jamesporter/CGExtensions",
       "state" : {
         "branch" : "main",
-        "revision" : "1a33a318abd6a02acbf644b55bac9500e79c9efd"
+        "revision" : "c72daea7cdef9a520401ae5afa01451a06d0621c"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-snapshot-testing",
       "state" : {
-        "revision" : "f29e2014f6230cf7d5138fc899da51c7f513d467",
-        "version" : "1.10.0"
+        "revision" : "cef5b3f6f11781dd4591bdd1dd0a3d22bd609334",
+        "version" : "1.11.0"
       }
     }
   ],
