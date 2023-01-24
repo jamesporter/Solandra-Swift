@@ -7,7 +7,7 @@ public class Solandra {
   
   // We set these from whatever context it is called. Whlie the ! may be dangerous, this is typically set by this framework in a helper view or other utility.
   var context: CGContext!
-  var time = Double.zero
+  public private(set) var time = Double.zero
   var size: CGSize!
   
   public init(seed: UInt64 = 0) {
