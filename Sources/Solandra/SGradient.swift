@@ -69,6 +69,11 @@ struct GradientPreviews: PreviewProvider {
 //
 //       ], start: CGPoint.zero, end: CGPoint(0, 480) ))
       s.randomPoints(n: 20).forEach { pt in
+        s.fill(SPath.star(r1: 100, r2: 25, at: pt, n: 12), withSimpleGradientFrom: .topLeft, to: .bottomRight, stops: [
+          SColor.orangered.with(opacity: 0.1).start,
+          s.randomColor(saturation: 1, brightness: 0.7, opacity: 0.4).end
+        ])
+        
         s.stroke(SPath.star(r1: 100, r2: 25, at: pt, n: 12), withSimpleGradientFrom: .topLeft, to: .bottomRight, stops: [
           SColor.orangered.with(opacity: 0.5).start,
           s.randomColor(saturation: 1, brightness: 0.7, opacity: 0.8).end
