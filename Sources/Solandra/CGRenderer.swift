@@ -33,7 +33,12 @@ extension Solandra {
   
   static func createCGContext(width: Int, height: Int) -> CGContext {
     #if os(OSX)
-    return CGContext(data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 4 * width, space: CGColorSpace(name: CGColorSpace.displayP3)!, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+    let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 4 * width, space: CGColorSpace(name: CGColorSpace.displayP3)!, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+    
+    // On MacOS will be flipped vertically (the canvas cases are actually taken care of by SwiftUI already).
+    let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: height.d)
+    context.concatenate(flipVertical)
+    return context
     #elseif os(iOS)
       UIGraphicsBeginImageContext(CGSize(width: width, height: height))
       return UIGraphicsGetCurrentContext()!

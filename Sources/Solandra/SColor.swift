@@ -2,9 +2,9 @@ import CoreGraphics
 import SwiftUI
 
 #if os(macOS)
-    typealias OSColor = NSColor
+    public typealias OSColor = NSColor
 #elseif os(iOS) || os(tvOS) || os(watchOS)
-    typealias OSColor = UIColor
+    public typealias OSColor = UIColor
 #endif
 
 public struct SColor {

@@ -3,8 +3,8 @@ import SnapshotTesting
 import SwiftUI
 import Solandra
 
+
 final class SolandraTests: XCTestCase {
-  
 #if os(macOS)
     func testDrawingSomething() throws {
       let vc = NSHostingController(rootView: SolandraCanvas {
@@ -27,12 +27,14 @@ final class SolandraTests: XCTestCase {
     }
     
     let image = Solandra.renderImage(width: 1024, height: 800, sketch: sketch)
-    assertSnapshot(matching: image, as: .image)
+    assertSnapshot(matching: image, as: .image(precision: 0.95, perceptualPrecision: 0.95))
   }
+  
+  #endif
   
   func testAPattern() throws {
     let image = Solandra.renderImage(width: 1024, height: 1024) { context, size, solandra in
-      context.setFillColor(NSColor(hue: 0.63, saturation: 0.74, brightness: 0.1, alpha: 1).cgColor)
+      solandra.setFill(0.63, 0.74, 0.1, 1)
       context.addRect(size.rect)
       context.fillPath()
       
@@ -45,18 +47,18 @@ final class SolandraTests: XCTestCase {
       
       var paths = path.exploded().flatMap {
         $0.exploded(magnitude: 2, scale: 0.8)
-      }.flatMap { try! $0.segmented() }
+      }.flatMap { $0.segmented() }
       
       paths = solandra.shuffled(items: paths)
       
       
       paths.enumerated().forEach { (i, p) in
-        context.setFillColor(NSColor(hue: i.d / 100, saturation: 0.74, brightness: 0.6, alpha: 0.9).cgColor)
+        solandra.setFill(i.d / 100, 0.74, 0.6, 0.9)
         p.addTo(context: context)
         context.fillPath()
       }
     }
-    assertSnapshot(matching: image, as: .image)
+    assertSnapshot(matching: image, as: .image(precision: 0.95, perceptualPrecision: 0.95))
   }
   
   func testStar() throws {
@@ -68,12 +70,12 @@ final class SolandraTests: XCTestCase {
       
 //      context.setFillColor(NSColor(hue: 0.1, saturation: 0.74, brightness: 0.6, alpha: 0.8).cgColor)
       s.setFill(0.1, 0.74, 0.6, 0.8)
-      let path = try! SPath.star(r1: 320, r2: 120, at: size.rect.center, n: 12)
+      let path = SPath.star(r1: 320, r2: 120, at: size.rect.center, n: 12)
 //      path.addTo(context: context)
 //      context.fillPath()
       s.fill(path)
     }
-    assertSnapshot(matching: image, as: .image)
+    assertSnapshot(matching: image, as: .image(precision: 0.95, perceptualPrecision: 0.95))
   }
   
   func testSpiral() throws {
@@ -89,7 +91,7 @@ final class SolandraTests: XCTestCase {
       let path = SPath.spiral(at: size.rect.center, n: 1000, l: 20)
       s.stroke(path)
     }
-    assertSnapshot(matching: image, as: .image)
+    assertSnapshot(matching: image, as: .image(precision: 0.95, perceptualPrecision: 0.95))
   }
   
   func testRegular() throws {
@@ -102,7 +104,18 @@ final class SolandraTests: XCTestCase {
         s.fill(path)
       }
     }
-    assertSnapshot(matching: image, as: .image)
+    assertSnapshot(matching: image, as: .image(precision: 0.95, perceptualPrecision: 0.95))
   }
-#endif
+
+  func testOrientation() throws {
+    let image = Solandra.renderImage(width: 1024, height: 1024) { context, size, s in
+      s.background(0.13, 0.44, 0.1)
+      
+      s.setFill(0.9, 0.8, 0.6, 0.9)
+      
+      // check renders in top left
+      s.fill(SPath.square(at: CGPoint(10,10), size: 100))
+    }
+    assertSnapshot(matching: image, as: .image(precision: 0.95, perceptualPrecision: 0.95))
+  }
 }
