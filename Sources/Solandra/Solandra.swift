@@ -6,9 +6,9 @@ public class Solandra {
   var rng: PseudoRandom
   
   // We set these from whatever context it is called. Whlie the ! may be dangerous, this is typically set by this framework in a helper view or other utility.
-  var context: CGContext!
+  public internal(set) var context: CGContext!
   public internal(set) var time = Double.zero
-  var size: CGSize!
+  public internal(set) var size: CGSize!
   
   public init(seed: UInt64 = 0) {
     rng = PseudoRandom(seed: seed)
