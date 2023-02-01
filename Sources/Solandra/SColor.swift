@@ -13,34 +13,34 @@ public struct SColor {
   public var brightness: Double
   public var opacity: Double = 1
   
-  init(hue: Double, saturation: Double, brightness: Double, opacity: Double = 1) {
+  public init(hue: Double, saturation: Double, brightness: Double, opacity: Double = 1) {
     self.hue = hue
     self.saturation = saturation
     self.brightness = brightness
     self.opacity = opacity
   }
   
-  var cg: CGColor {
+  public var cg: CGColor {
     OSColor(hue: hue, saturation: saturation, brightness: brightness, alpha: opacity).cgColor
   }
   
-  func stop(at: Double) -> SColorStop {
+  public func stop(at: Double) -> SColorStop {
     SColorStop(color: self, location: at)
   }
   
-  var start: SColorStop {
+  public var start: SColorStop {
     stop(at: 0)
   }
   
-  var quarter: SColorStop {
+  public var quarter: SColorStop {
     stop(at: 0.25)
   }
   
-  var mid: SColorStop {
+  public var mid: SColorStop {
     stop(at: 0.5)
   }
   
-  var threeQuarter: SColorStop {
+  public var threeQuarter: SColorStop {
     stop(at: 0.75)
   }
   

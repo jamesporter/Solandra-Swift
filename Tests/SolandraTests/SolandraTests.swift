@@ -29,9 +29,7 @@ final class SolandraTests: XCTestCase {
     let image = Solandra.renderImage(width: 1024, height: 800, sketch: sketch)
     assertSnapshot(matching: image, as: .image(precision: 0.95, perceptualPrecision: 0.95))
   }
-  
-  #endif
-  
+
   func testAPattern() throws {
     let image = Solandra.renderImage(width: 1024, height: 1024) { context, size, solandra in
       solandra.setFill(0.63, 0.74, 0.1, 1)
@@ -118,4 +116,18 @@ final class SolandraTests: XCTestCase {
     }
     assertSnapshot(matching: image, as: .image(precision: 0.95, perceptualPrecision: 0.95))
   }
+  
+  func testText() throws {
+    let vc = NSHostingController(rootView: SolandraCanvas { _, size, s in
+      s.background(0.1, 0.2, 0.95)
+      for i in 1...10 {
+        s.text("Hello World \(i)", fontName: "AppleSDGothicNeo", fontSize: i.d + 12, color: SColor(hue: 0.54 + (i.d / 40.0), saturation: 0.8, brightness: 0.7, opacity: 0.9), at: size.point * i.d / 12 + s.randomPoint() * 0.05)
+      }
+    })
+    
+    vc.view.frame = NSRect(x: 0, y: 0, width: 1024, height: 640)
+    
+    assertSnapshot(matching: vc, as: .image(precision: 0.95, perceptualPrecision: 0.95))
+  }
+  #endif
 }
